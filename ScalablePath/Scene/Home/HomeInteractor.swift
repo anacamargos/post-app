@@ -39,10 +39,10 @@ final class HomeInteractor {
     }
     
     private func handleSuccess(
-        entities: [PostResponseEntity]
+        entities: [PostCompleteResponse]
     ) {
         let viewData = entities.map {
-            Home.ViewData(postTitle: $0.title, authorName: "Test", postContent: $0.body)
+            Home.ViewData(postTitle: $0.postTitle, authorName: $0.authorName, postContent: $0.postContent)
         }
         viewController?.displayViewState(.content(viewData))
     }

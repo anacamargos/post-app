@@ -13,11 +13,16 @@ protocol URLSessionProvider {
 extension URLSession: URLSessionProvider {}
 
 protocol PostServiceProvider {
-    func getPosts(then handle: @escaping (Result<[PostResponseEntity], PostServiceError>) -> Void)
+    func getPosts(then handle: @escaping (Result<[PostCompleteResponse], PostServiceError>) -> Void)
 }
 
 enum PostServiceError: Error {
     case genericError
+}
+
+struct UserResponseEntity: Codable {
+    let id: UInt
+    let name: String
 }
 
 struct PostResponseEntity: Codable {
@@ -25,6 +30,12 @@ struct PostResponseEntity: Codable {
     let id: UInt
     let title: String
     let body: String
+}
+
+struct PostCompleteResponse {
+    let authorName: String
+    let postTitle: String
+    let postContent: String
 }
 
 final class PostService: PostServiceProvider {
@@ -61,51 +72,45 @@ final class PostService: PostServiceProvider {
         task.resume()
     }
     
-    private func getUserData(userId: String, then handle: @escaping (Result<String, PostServiceError>) -> Void) {
+    private func getUserData(postEntities: [PostResponseEntity], then handle: @escaping (Result<[PostCompleteResponse], PostServiceError>) -> Void) {
         guard let apiURL = URL(string: "https://jsonplaceholder.typicode.com/users") else { return }
-        dispatch(ofType: String.self, url: apiURL) { result in
-            <#code#>
+        dispatch(ofType: [UserResponseEntity].self, url: apiURL) { [weak self] result in
+            switch result {
+            case let .success(userResponse):
+                self?.handleSuccessOnServices(postEntities: postEntities, usersResponseEntity: userResponse, then: handle)
+            case .failure:
+                handle(.failure(.genericError))
+            }
         }
+    }
+    
+    private func handleSuccessOnServices(
+        postEntities: [PostResponseEntity],
+        usersResponseEntity: [UserResponseEntity],
+        then handle: @escaping (Result<[PostCompleteResponse], PostServiceError>) -> Void
+    ) {
+        let postCompleteResponse = postEntities.map {
+            PostCompleteResponse(authorName: getAuthorName(from: $0.userId, usersData: usersResponseEntity), postTitle: $0.title, postContent: $0.body)
+        }
+        handle(.success(postCompleteResponse))
+    }
+    
+    private func getAuthorName(from userId: UInt, usersData: [UserResponseEntity]) -> String {
+        let selectedUser = usersData.first(where: { $0.id == userId})
+        return selectedUser?.name ?? ""
     }
     
     // MARK: - PostServiceProvider
     
-    func getPosts(then handle: @escaping (Result<[PostResponseEntity], PostServiceError>) -> Void) {
+    func getPosts(then handle: @escaping (Result<[PostCompleteResponse], PostServiceError>) -> Void) {
         guard let apiURL = URL(string: "https://jsonplaceholder.typicode.com/posts") else { return }
-        dispatch(ofType: [PostResponseEntity], url: apiURL) { result in
+        dispatch(ofType: [PostResponseEntity].self, url: apiURL) { [weak self] result in
             switch result {
             case let .success(response):
-                getUserData(userId: response.userId, then: <#T##(Result<String, PostServiceError>) -> Void#>) {
-                    handle(.success(<#T##[PostResponseEntity]#>))
-                }
+                self?.getUserData(postEntities: response, then: handle)
             case .failure:
                 handle(.failure(.genericError))
             }
         }
     }
 }
-
-//{
-//    "id": 1,
-//    "name": "Leanne Graham",
-//    "username": "Bret",
-//    "email": "Sincere@april.biz",
-//    "address": {
-//      "street": "Kulas Light",
-//      "suite": "Apt. 556",
-//      "city": "Gwenborough",
-//      "zipcode": "92998-3874",
-//      "geo": {
-//        "lat": "-37.3159",
-//        "lng": "81.1496"
-//      }
-//    },
-//    "phone": "1-770-736-8031 x56442",
-//    "website": "hildegard.org",
-//    "company": {
-//      "name": "Romaguera-Crona",
-//      "catchPhrase": "Multi-layered client-server neural-net",
-//      "bs": "harness real-time e-markets"
-//    }
-//  },
-//

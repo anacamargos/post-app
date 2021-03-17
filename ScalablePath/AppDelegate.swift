@@ -23,8 +23,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 
 final class HomeConfigurator {
+    
     func resolveViewController() -> UIViewController {
-        
+        let service = PostService(urlSession: URLSession.shared)
+        let interactor = HomeInteractor(service: service)
+        let viewController = HomeViewController(interctor: interactor)
+        interactor.viewController = viewController
+        return viewController
     }
 }
 

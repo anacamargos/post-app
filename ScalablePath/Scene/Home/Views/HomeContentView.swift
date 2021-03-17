@@ -72,7 +72,9 @@ extension HomeContentView: HomeContentViewProtocol {
     
     func setupViewState(_ viewState: Home.ViewState) {
         self.viewState = viewState
-        tableView.reloadData()
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
 }
 
