@@ -12,6 +12,7 @@
 		BF6FA38D260217370053C009 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF6FA38B260217370053C009 /* LaunchScreen.storyboard */; };
 		BF6FA398260217370053C009 /* ScalablePathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6FA397260217370053C009 /* ScalablePathTests.swift */; };
 		BF6FA3A3260217370053C009 /* ScalablePathUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6FA3A2260217370053C009 /* ScalablePathUITests.swift */; };
+		BF6FB0DB260267D90003C3F2 /* PostServiceModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6FB0DA260267D90003C3F2 /* PostServiceModels.swift */; };
 		BFFFC95226021ABC00DA936A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFFC95126021ABC00DA936A /* HomeViewController.swift */; };
 		BFFFC95B26021AF300DA936A /* HomeContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFFC95A26021AF300DA936A /* HomeContentView.swift */; };
 		BFFFC96326021CCD00DA936A /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFFC96226021CCD00DA936A /* PostCell.swift */; };
@@ -48,6 +49,7 @@
 		BF6FA39E260217370053C009 /* ScalablePathUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScalablePathUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF6FA3A2260217370053C009 /* ScalablePathUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScalablePathUITests.swift; sourceTree = "<group>"; };
 		BF6FA3A4260217370053C009 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BF6FB0DA260267D90003C3F2 /* PostServiceModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostServiceModels.swift; sourceTree = "<group>"; };
 		BFFFC95126021ABC00DA936A /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		BFFFC95A26021AF300DA936A /* HomeContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeContentView.swift; sourceTree = "<group>"; };
 		BFFFC96226021CCD00DA936A /* PostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				BFFFC96D2602223400DA936A /* PostService.swift */,
+				BF6FB0DA260267D90003C3F2 /* PostServiceModels.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -299,6 +302,7 @@
 				BFFFC96E2602223400DA936A /* PostService.swift in Sources */,
 				BF6FA381260217340053C009 /* AppDelegate.swift in Sources */,
 				BFFFC95226021ABC00DA936A /* HomeViewController.swift in Sources */,
+				BF6FB0DB260267D90003C3F2 /* PostServiceModels.swift in Sources */,
 				BFFFC968260220DB00DA936A /* HomeInteractor.swift in Sources */,
 				BFFFC96326021CCD00DA936A /* PostCell.swift in Sources */,
 			);
